@@ -12,9 +12,9 @@ namespace GingerMintSoft.VersionParser
 
         private HtmlDocument? Document { get; set; }
 
-        public static string MicrosoftBaseUri { get; set; } = "https://dotnet.microsoft.com";
+        public static string MicrosoftUri { get; set; } = "https://dotnet.microsoft.com";
 
-        public string MicrosoftDotNetUri { get; set; } = $"{MicrosoftBaseUri}/en-us/download/dotnet";
+        public string DotNetUri { get; set; } = $"{MicrosoftUri}/en-us/download/dotnet";
 
         /// <summary>
         /// Constructor 
@@ -49,7 +49,7 @@ namespace GingerMintSoft.VersionParser
                 : Sdk.Arm64.GetAttributeOfType<EnumMemberAttribute>()?.Value;
 
             var actual = version.GetAttributeOfType<EnumMemberAttribute>()?.Value;
-            var htmlPage = new HtmlPage().Load($"{MicrosoftDotNetUri}/{actual}");
+            var htmlPage = new HtmlPage().Load($"{DotNetUri}/{actual}");
 
             var downLoads = htmlPage?.DocumentNode
                 .SelectNodes($"//a[contains(text(), '{sdk}')]")
@@ -94,6 +94,27 @@ namespace GingerMintSoft.VersionParser
         public string ReadDownloadPageForVersion(Version version, string specificVersion, Sdk architecture)
         {
             return ReadDownloadPages(version, architecture).First(x => x.Contains(specificVersion));
+        }
+
+        /// <summary>
+        /// Read .NET download link with related checksum
+        /// </summary>
+        /// <param name="uri">Uri to download SDK page</param>
+        /// <returns>Download SDK uri and checksum</returns>
+        public (string? downLoadLink, string? checkSum) ReadDownloadLinkAndChecksum(string uri)
+        {
+            var htmlPage = new HtmlPage().Load($"{uri}");
+
+            // .NET SDK download link and checksum
+            return 
+                (htmlPage?.DocumentNode
+                .SelectNodes("//a[@id='directLink']")
+                .Select(x => x.GetAttributeValue("href", string.Empty))
+                .First(), 
+                htmlPage?.DocumentNode
+                .SelectNodes("//input[@id='checksum']")
+                .Select(x => x.GetAttributeValue("value", string.Empty))
+                .First());
         }
     }
 }
