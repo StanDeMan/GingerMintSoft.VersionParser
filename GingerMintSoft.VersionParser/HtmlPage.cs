@@ -1,7 +1,7 @@
-﻿using System.Runtime.Serialization;
+﻿using HtmlAgilityPack;
+using System.Runtime.Serialization;
 using GingerMintSoft.VersionParser.Architecture;
 using GingerMintSoft.VersionParser.Extensions;
-using HtmlAgilityPack;
 using Version = GingerMintSoft.VersionParser.Architecture.Version;
 
 namespace GingerMintSoft.VersionParser
@@ -12,14 +12,23 @@ namespace GingerMintSoft.VersionParser
 
         private HtmlDocument? Document { get; set; }
 
-        public string MicrosoftBaseUri { get; set; } = "https://dotnet.microsoft.com";
-        public string MicrosoftDotNetUri { get; set; } = "https://dotnet.microsoft.com/en-us/download/dotnet";
+        public static string MicrosoftBaseUri { get; set; } = "https://dotnet.microsoft.com";
 
+        public string MicrosoftDotNetUri { get; set; } = $"{MicrosoftBaseUri}/en-us/download/dotnet";
+
+        /// <summary>
+        /// Constructor 
+        /// </summary>
         public HtmlPage()
         {
             Web = new HtmlWeb();
         }
 
+        /// <summary>
+        /// Load Html page as content
+        /// </summary>
+        /// <param name="htmlPage">Load this page</param>
+        /// <returns>Html document</returns>
         private HtmlDocument? Load(string htmlPage)
         {
             Document = Web.Load(htmlPage);
@@ -27,6 +36,12 @@ namespace GingerMintSoft.VersionParser
             return Document;
         }
 
+        /// <summary>
+        /// Read download .NET versions at given page
+        /// </summary>
+        /// <param name="version">Search for this .NET version</param>
+        /// <param name="architecture">Search for this architecture/bitness</param>
+        /// <returns>List of partially version download uris</returns>
         public List<string> ReadDownloadPages(Version version, Sdk architecture)
         {
             var sdk = architecture == Sdk.Arm32 
