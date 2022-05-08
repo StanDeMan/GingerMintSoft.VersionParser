@@ -44,18 +44,22 @@ namespace GingerMintSoft.VersionParser
         /// <returns>List of partially version download uris</returns>
         public List<string> ReadDownloadPages(Version version, Sdk architecture)
         {
+            // Get ARM bitness architecture for SDK
             var sdk = architecture == Sdk.Arm32 
                 ? Sdk.Arm32.GetAttributeOfType<EnumMemberAttribute>()?.Value 
                 : Sdk.Arm64.GetAttributeOfType<EnumMemberAttribute>()?.Value;
 
+            // Get .NET main version: 3.1/5.0/6.0/etc.
             var actual = version.GetAttributeOfType<EnumMemberAttribute>()?.Value;
             var htmlPage = new HtmlPage().Load($"{DotNetUri}/{actual}");
 
+            // Filter for Linux .NET SDK
             var downLoads = htmlPage?.DocumentNode
                 .SelectNodes($"//a[contains(text(), '{sdk}')]")
                 .Select(x => x.GetAttributeValue("href", string.Empty))
                 .ToList();
 
+            // filter unwanted: only ARM32 and ARM64 Bit is welcome for Raspberry Pi
             for (var i = 0; i < downLoads?.Count; i++)
             {
                 if (!downLoads[i].Contains("alpine") && !downLoads[i].Contains("x32") &&
@@ -67,6 +71,7 @@ namespace GingerMintSoft.VersionParser
                 downLoads.RemoveAt(i--);
             }
 
+            // reverse version number ordering -> the actual is on top
             downLoads?.Sort();
             downLoads?.Reverse();
 
