@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Linq;
+using GingerMintSoft.VersionParser.Architecture;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace GingerMintSoft.VersionParser.Test
@@ -15,29 +16,8 @@ namespace GingerMintSoft.VersionParser.Test
             var page = new HtmlPage();
             Assert.IsNotNull(page);
 
-            var document = page.Load(UriToCore6);
-            Assert.IsNotNull(document);
-
-            var downLoads = document
-                .DocumentNode
-                .SelectNodes("//a[contains(text(), 'Arm64')]")
-                .Select(x => x.GetAttributeValue("href", string.Empty))
-                .ToList();
-
-            for (var i = 0; i < downLoads.Count; i++)
-            {
-                if (!downLoads[i].Contains("alpine") && !downLoads[i].Contains("x32") &&
-                    !downLoads[i].Contains("x64") && !downLoads[i].Contains("macos") &&
-                    !downLoads[i].Contains("windows") && !downLoads[i].Contains("runtime") &&
-                    !downLoads[i].Contains("rc") && !downLoads[i].Contains("preview")) 
-                    continue;
-
-                downLoads.RemoveAt(i--);
-                continue;
-            }
-
-            downLoads.Sort();
-            downLoads.Reverse();
+            var downLoads = page.ReadVersions("3.1", Sdk.Arm64);
+            Assert.IsNotNull(downLoads);
 
             foreach (var downLoad in downLoads)
             {
@@ -51,29 +31,8 @@ namespace GingerMintSoft.VersionParser.Test
             var page = new HtmlPage();
             Assert.IsNotNull(page);
 
-            var document = page.Load(UriToCore6);
-            Assert.IsNotNull(document);
-
-            var downLoads = document
-                .DocumentNode
-                .SelectNodes("//a[contains(text(), 'Arm32')]")
-                .Select(x => x.GetAttributeValue("href", string.Empty))
-                .ToList();
-
-            for (var i = 0; i < downLoads.Count; i++)
-            {
-                if (!downLoads[i].Contains("alpine") && !downLoads[i].Contains("x32") &&
-                    !downLoads[i].Contains("x64") && !downLoads[i].Contains("macos") &&
-                    !downLoads[i].Contains("windows") && !downLoads[i].Contains("runtime") &&
-                    !downLoads[i].Contains("rc") && !downLoads[i].Contains("preview")) 
-                    continue;
-
-                downLoads.RemoveAt(i--);
-                continue;
-            }
-
-            downLoads.Sort();
-            downLoads.Reverse();
+            var downLoads = page.ReadVersions("3.1", Sdk.Arm32);
+            Assert.IsNotNull(downLoads);
 
             foreach (var downLoad in downLoads)
             {
