@@ -15,7 +15,7 @@ namespace GingerMintSoft.VersionParser.Test
             var page = new HtmlPage();
             Assert.IsNotNull(page);
 
-            var downLoads = page.ReadVersions(Version.Core6, Sdk.Arm64);
+            var downLoads = page.ReadDownloadPages(Version.Core6, Sdk.Arm64);
             Assert.IsNotNull(downLoads);
 
             foreach (var downLoad in downLoads)
@@ -30,7 +30,7 @@ namespace GingerMintSoft.VersionParser.Test
             var page = new HtmlPage();
             Assert.IsNotNull(page);
 
-            var downLoads = page.ReadVersions(Version.Core6, Sdk.Arm32);
+            var downLoads = page.ReadDownloadPages(Version.Core6, Sdk.Arm32);
             Assert.IsNotNull(downLoads);
 
             foreach (var downLoad in downLoads)

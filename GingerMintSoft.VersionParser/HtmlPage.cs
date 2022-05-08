@@ -12,6 +12,7 @@ namespace GingerMintSoft.VersionParser
 
         private HtmlDocument? Document { get; set; }
 
+        public string MicrosoftBaseUri { get; set; } = "https://dotnet.microsoft.com";
         public string MicrosoftDotNetUri { get; set; } = "https://dotnet.microsoft.com/en-us/download/dotnet";
 
         public HtmlPage()
@@ -26,7 +27,7 @@ namespace GingerMintSoft.VersionParser
             return Document;
         }
 
-        public List<string> ReadVersions(Version version, Sdk architecture)
+        public List<string> ReadDownloadPages(Version version, Sdk architecture)
         {
             var sdk = architecture == Sdk.Arm32 
                 ? Sdk.Arm32.GetAttributeOfType<EnumMemberAttribute>()?.Value 
