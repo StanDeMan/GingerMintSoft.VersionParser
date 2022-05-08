@@ -15,7 +15,7 @@ namespace GingerMintSoft.VersionParser.Test
             var sdkUri = "https://dotnet.microsoft.com/en-us/download/dotnet/thank-you/sdk-6.0.202-linux-arm64-binaries";
             Console.WriteLine($"Download Uri: {sdkUri}\r\n");
 
-            var (downLoadLink, checkSum) = page.ReadDownloadLinkAndChecksum($"{sdkUri}");
+            var (downLoadLink, checkSum) = page.ReadDownloadUriAndChecksum($"{sdkUri}");
             Assert.IsNotNull(downLoadLink);
             Assert.IsNotNull(checkSum);
 
@@ -24,7 +24,7 @@ namespace GingerMintSoft.VersionParser.Test
 
             sdkUri = "https://dotnet.microsoft.com/en-us/download/dotnet/thank-you/sdk-3.1.418-linux-arm32-binaries";
 
-            (downLoadLink, checkSum) = page.ReadDownloadLinkAndChecksum($"{sdkUri}");
+            (downLoadLink, checkSum) = page.ReadDownloadUriAndChecksum($"{sdkUri}");
             Assert.IsNotNull(downLoadLink);
             Assert.IsNotNull(checkSum);
 
