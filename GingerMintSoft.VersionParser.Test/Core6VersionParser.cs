@@ -8,8 +8,6 @@ namespace GingerMintSoft.VersionParser.Test
     [TestClass]
     public class Core6VersionParser
     {
-        private const string  UriToCore6 = "https://dotnet.microsoft.com/en-us/download/dotnet/6.0";
-
         [TestMethod]
         public void FindCore6Arm64TestMethod()
         {

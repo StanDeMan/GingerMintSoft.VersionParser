@@ -8,8 +8,6 @@ namespace GingerMintSoft.VersionParser.Test
     [TestClass]
     public class Core5VersionParser
     {
-        private const string  UriToCore5 = "https://dotnet.microsoft.com/en-us/download/dotnet/5.0";
-
         [TestMethod]
         public void FindCore5Arm64TestMethod()
         {
