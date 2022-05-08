@@ -72,5 +72,12 @@ namespace GingerMintSoft.VersionParser
 
             return downLoads ?? new List<string>();
         }
+
+        public string ReadActualDownloadPage(Version version, Sdk architecture)
+        {
+            var versions = ReadDownloadPages(version, architecture);
+
+            return versions.First();
+        }
     }
 }
