@@ -103,6 +103,7 @@ namespace GingerMintSoft.VersionParser
         /// <returns>Download SDK uri and checksum</returns>
         public (string? downLoadLink, string? checkSum) ReadDownloadLinkAndChecksum(string uri)
         {
+            // load page content from uri
             var htmlPage = new HtmlPage().Load($"{uri}");
 
             // .NET SDK download link and checksum
