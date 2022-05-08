@@ -2,6 +2,7 @@
 using System.Linq;
 using GingerMintSoft.VersionParser.Architecture;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using Version = GingerMintSoft.VersionParser.Architecture.Version;
 
 namespace GingerMintSoft.VersionParser.Test
 {
@@ -14,7 +15,7 @@ namespace GingerMintSoft.VersionParser.Test
             var page = new HtmlPage();
             Assert.IsNotNull(page);
 
-            var downLoads = page.ReadVersions("5.0", Sdk.Arm64);
+            var downLoads = page.ReadVersions(Version.Core5, Sdk.Arm64);
             Assert.IsNotNull(downLoads);
 
             foreach (var downLoad in downLoads)
@@ -29,7 +30,7 @@ namespace GingerMintSoft.VersionParser.Test
             var page = new HtmlPage();
             Assert.IsNotNull(page);
 
-            var downLoads = page.ReadVersions("5.0", Sdk.Arm32);
+            var downLoads = page.ReadVersions(Version.Core5, Sdk.Arm32);
             Assert.IsNotNull(downLoads);
 
             foreach (var downLoad in downLoads)

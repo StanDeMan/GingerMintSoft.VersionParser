@@ -2,6 +2,7 @@
 using GingerMintSoft.VersionParser.Architecture;
 using GingerMintSoft.VersionParser.Extensions;
 using HtmlAgilityPack;
+using Version = GingerMintSoft.VersionParser.Architecture.Version;
 
 namespace GingerMintSoft.VersionParser
 {
@@ -10,6 +11,8 @@ namespace GingerMintSoft.VersionParser
         private HtmlWeb Web { get; set; }
 
         private HtmlDocument? Document { get; set; }
+
+        public string MicrosoftDotNetUri { get; set; } = "https://dotnet.microsoft.com/en-us/download/dotnet";
 
         public HtmlPage()
         {
@@ -23,13 +26,14 @@ namespace GingerMintSoft.VersionParser
             return Document;
         }
 
-        public List<string> ReadVersions(string version, Sdk architecture)
+        public List<string> ReadVersions(Version version, Sdk architecture)
         {
-            var htmlPage = new HtmlPage().Load($"https://dotnet.microsoft.com/en-us/download/dotnet/{version}");
-
             var sdk = architecture == Sdk.Arm32 
                 ? Sdk.Arm32.GetAttributeOfType<EnumMemberAttribute>()?.Value 
                 : Sdk.Arm64.GetAttributeOfType<EnumMemberAttribute>()?.Value;
+
+            var actual = version.GetAttributeOfType<EnumMemberAttribute>()?.Value;
+            var htmlPage = new HtmlPage().Load($"{MicrosoftDotNetUri}/{actual}");
 
             var downLoads = htmlPage?.DocumentNode
                 .SelectNodes($"//a[contains(text(), '{sdk}')]")
