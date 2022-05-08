@@ -8,7 +8,7 @@ namespace GingerMintSoft.VersionParser
 {
     public class HtmlPage
     {
-        private HtmlWeb Web { get; set; }
+        private HtmlWeb Web { get; }
 
         private HtmlDocument? Document { get; set; }
 
@@ -73,11 +73,27 @@ namespace GingerMintSoft.VersionParser
             return downLoads ?? new List<string>();
         }
 
+        /// <summary>
+        /// Read actual download partial uri for .NET version and bitness
+        /// </summary>
+        /// <param name="version">Search for this .NET version</param>
+        /// <param name="architecture">Search for this architecture/bitness</param>
+        /// <returns>Partial version download uri</returns>
         public string ReadActualDownloadPage(Version version, Sdk architecture)
         {
-            var versions = ReadDownloadPages(version, architecture);
+            return ReadDownloadPages(version, architecture).First();
+        }
 
-            return versions.First();
+        /// <summary>
+        /// Read download partial uri for .NET version, bitness and a specific SDK version
+        /// </summary>
+        /// <param name="version">Search for this .NET version</param>
+        /// <param name="specificVersion">Search for this .NET SDK version</param>
+        /// <param name="architecture">Search for this architecture/bitness</param>
+        /// <returns>Partial version download uri</returns>
+        public string ReadDownloadPageForVersion(Version version, string specificVersion, Sdk architecture)
+        {
+            return ReadDownloadPages(version, architecture).First(x => x.Contains(specificVersion));
         }
     }
 }

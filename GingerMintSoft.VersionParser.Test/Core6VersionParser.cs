@@ -55,5 +55,22 @@ namespace GingerMintSoft.VersionParser.Test
 
             Console.WriteLine($"{downLoad} \r\n");
         }
+
+        [TestMethod]
+        public void ReadCore6Version()
+        {
+            var page = new HtmlPage();
+            Assert.IsNotNull(page);
+
+            var downLoad = page.ReadDownloadPageForVersion(Version.Core6, "6.0.103", Sdk.Arm64);
+            Assert.IsNotNull(downLoad);
+
+            Console.WriteLine($"{downLoad} \r\n");
+
+            downLoad = page.ReadDownloadPageForVersion(Version.Core6, "6.0.100", Sdk.Arm64);
+            Assert.IsNotNull(downLoad);
+
+            Console.WriteLine($"{downLoad} \r\n");
+        }
     }
 }
