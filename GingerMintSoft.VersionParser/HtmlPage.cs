@@ -6,7 +6,7 @@ namespace GingerMintSoft.VersionParser
     {
         private HtmlWeb Web { get; set; }
 
-        public HtmlDocument? Content { get; set; }
+        public HtmlDocument? Document { get; set; }
 
         public HtmlPage()
         {
@@ -15,9 +15,9 @@ namespace GingerMintSoft.VersionParser
 
         public HtmlDocument? Load(string htmlPage)
         {
-            Content = Web.Load(htmlPage);
+            Document = Web.Load(htmlPage);
 
-            return Content;
+            return Document;
         }
     }
 }
