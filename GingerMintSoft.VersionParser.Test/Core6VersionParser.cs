@@ -1,7 +1,5 @@
 using System;
 using System.Linq;
-using System.Runtime.CompilerServices;
-using System.Security.Cryptography.X509Certificates;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace GingerMintSoft.VersionParser.Test
@@ -23,25 +21,27 @@ namespace GingerMintSoft.VersionParser.Test
             var downLoads = document
                 .DocumentNode
                 .SelectNodes("//a[contains(text(), 'Arm64')]")
-                .Select(x => x.GetAttributeValue("href", String.Empty))
+                .Select(x => x.GetAttributeValue("href", string.Empty))
                 .ToList();
 
             for (var i = 0; i < downLoads.Count; i++)
             {
-                if (downLoads[i].Contains("alpine") ||
-                    downLoads[i].Contains("x32") ||
-                    downLoads[i].Contains("x64") ||
-                    downLoads[i].Contains("macos") ||
-                    downLoads[i].Contains("windows") ||
-                    downLoads[i].Contains("runtime") ||
-                    downLoads[i].Contains("rc") ||
-                    downLoads[i].Contains("preview"))
-                {
-                    downLoads.RemoveAt(i--);
+                if (!downLoads[i].Contains("alpine") && !downLoads[i].Contains("x32") &&
+                    !downLoads[i].Contains("x64") && !downLoads[i].Contains("macos") &&
+                    !downLoads[i].Contains("windows") && !downLoads[i].Contains("runtime") &&
+                    !downLoads[i].Contains("rc") && !downLoads[i].Contains("preview")) 
                     continue;
-                }
 
-                Console.WriteLine($"{downLoads[i]} \r\n");
+                downLoads.RemoveAt(i--);
+                continue;
+            }
+
+            downLoads.Sort();
+            downLoads.Reverse();
+
+            foreach (var downLoad in downLoads)
+            {
+                Console.WriteLine($"{downLoad} \r\n");
             }
         }
 
@@ -57,25 +57,27 @@ namespace GingerMintSoft.VersionParser.Test
             var downLoads = document
                 .DocumentNode
                 .SelectNodes("//a[contains(text(), 'Arm32')]")
-                .Select(x => x.GetAttributeValue("href", String.Empty))
+                .Select(x => x.GetAttributeValue("href", string.Empty))
                 .ToList();
 
             for (var i = 0; i < downLoads.Count; i++)
             {
-                if (downLoads[i].Contains("alpine") ||
-                    downLoads[i].Contains("x32") ||
-                    downLoads[i].Contains("x64") ||
-                    downLoads[i].Contains("macos") ||
-                    downLoads[i].Contains("windows") ||
-                    downLoads[i].Contains("runtime") ||
-                    downLoads[i].Contains("rc") ||
-                    downLoads[i].Contains("preview"))
-                {
-                    downLoads.RemoveAt(i--);
+                if (!downLoads[i].Contains("alpine") && !downLoads[i].Contains("x32") &&
+                    !downLoads[i].Contains("x64") && !downLoads[i].Contains("macos") &&
+                    !downLoads[i].Contains("windows") && !downLoads[i].Contains("runtime") &&
+                    !downLoads[i].Contains("rc") && !downLoads[i].Contains("preview")) 
                     continue;
-                }
 
-                Console.WriteLine($"{downLoads[i]} \r\n");
+                downLoads.RemoveAt(i--);
+                continue;
+            }
+
+            downLoads.Sort();
+            downLoads.Reverse();
+
+            foreach (var downLoad in downLoads)
+            {
+                Console.WriteLine($"{downLoad} \r\n");
             }
         }
     }
