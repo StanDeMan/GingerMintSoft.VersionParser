@@ -1,5 +1,4 @@
 using System;
-using System.Linq;
 using GingerMintSoft.VersionParser.Architecture;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Version = GingerMintSoft.VersionParser.Architecture.Version;
