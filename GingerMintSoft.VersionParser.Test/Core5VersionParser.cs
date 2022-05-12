@@ -11,7 +11,7 @@ namespace GingerMintSoft.VersionParser.Test
         [TestMethod]
         public void FindCore5Arm64TestMethod()
         {
-            var page = new HtmlPage("https://dotnet.microsoft.com");
+            var page = new HtmlPage();
             Assert.IsNotNull(page);
 
             var downLoads = page.ReadDownloadPages(Version.Core5, Sdk.Arm64);
@@ -26,7 +26,7 @@ namespace GingerMintSoft.VersionParser.Test
         [TestMethod]
         public void FindCore5Arm32TestMethod()
         {
-            var page = new HtmlPage("https://dotnet.microsoft.com");
+            var page = new HtmlPage();
             Assert.IsNotNull(page);
 
             var downLoads = page.ReadDownloadPages(Version.Core5, Sdk.Arm32);
@@ -41,7 +41,7 @@ namespace GingerMintSoft.VersionParser.Test
         [TestMethod]
         public void ReadActualCore5()
         {
-            var page = new HtmlPage("https://dotnet.microsoft.com");
+            var page = new HtmlPage();
             Assert.IsNotNull(page);
 
             var downLoad = page.ReadActualDownloadPage(Version.Core5, Sdk.Arm64);
@@ -58,7 +58,7 @@ namespace GingerMintSoft.VersionParser.Test
         [TestMethod]
         public void ReadCore5Version()
         {
-            var page = new HtmlPage("https://dotnet.microsoft.com");
+            var page = new HtmlPage();
             Assert.IsNotNull(page);
 
             var downLoad = page.ReadDownloadPageForVersion(Version.Core5, "5.0.203", Sdk.Arm64);

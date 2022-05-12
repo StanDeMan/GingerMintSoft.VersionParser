@@ -11,7 +11,7 @@ namespace GingerMintSoft.VersionParser.Test
         [TestMethod]
         public void FindCore6Arm64TestMethod()
         {
-            var page = new HtmlPage("https://dotnet.microsoft.com");
+            var page = new HtmlPage();
             Assert.IsNotNull(page);
 
             var downLoads = page.ReadDownloadPages(Version.Core6, Sdk.Arm64);
@@ -26,7 +26,7 @@ namespace GingerMintSoft.VersionParser.Test
         [TestMethod]
         public void FindCore6Arm32TestMethod()
         {
-            var page = new HtmlPage("https://dotnet.microsoft.com");
+            var page = new HtmlPage();
             Assert.IsNotNull(page);
 
             var downLoads = page.ReadDownloadPages(Version.Core6, Sdk.Arm32);
@@ -41,7 +41,7 @@ namespace GingerMintSoft.VersionParser.Test
         [TestMethod]
         public void ReadActualCore6()
         {
-            var page = new HtmlPage("https://dotnet.microsoft.com");
+            var page = new HtmlPage();
             Assert.IsNotNull(page);
 
             var downLoad = page.ReadActualDownloadPage(Version.Core6, Sdk.Arm64);
@@ -58,7 +58,7 @@ namespace GingerMintSoft.VersionParser.Test
         [TestMethod]
         public void ReadCore6Version()
         {
-            var page = new HtmlPage("https://dotnet.microsoft.com");
+            var page = new HtmlPage();
             Assert.IsNotNull(page);
 
             var downLoad = page.ReadDownloadPageForVersion(Version.Core6, "6.0.103", Sdk.Arm64);
