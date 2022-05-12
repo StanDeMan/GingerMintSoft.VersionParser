@@ -14,7 +14,7 @@ namespace GingerMintSoft.VersionParser.Test
         {
             var downloadLinks = new List<string>();
 
-            var page = new HtmlPage();
+            var page = new HtmlPage("https://dotnet.microsoft.com");
             Assert.IsNotNull(page);
 
             var downLoadLinks32 = page.ReadDownloadPages(Version.Core3, Sdk.Arm32);

@@ -9,7 +9,7 @@ namespace GingerMintSoft.VersionParser.Test
         [TestMethod]
         public void ReadDownloadLink()
         {
-            var page = new HtmlPage();
+            var page = new HtmlPage("https://dotnet.microsoft.com");
             Assert.IsNotNull(page);
 
             var sdkUri = "https://dotnet.microsoft.com/en-us/download/dotnet/thank-you/sdk-6.0.202-linux-arm64-binaries";
