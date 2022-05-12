@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using GingerMintSoft.VersionParser.Architecture;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Version = GingerMintSoft.VersionParser.Architecture.Version;
@@ -8,7 +7,7 @@ using Version = GingerMintSoft.VersionParser.Architecture.Version;
 namespace GingerMintSoft.VersionParser.Test
 {
     [TestClass]
-    public class ReadAllRelevantVersions
+    public class AllRelevantVersions
     {
         [TestMethod]
         public void FindAllCoreVersionsTestMethod()

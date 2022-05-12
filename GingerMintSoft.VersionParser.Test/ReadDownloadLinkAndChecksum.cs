@@ -4,7 +4,7 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 namespace GingerMintSoft.VersionParser.Test
 {
     [TestClass]
-    public class ReadDownloadLinkAndChecksum
+    public class DownloadLinkAndChecksum
     {
         [TestMethod]
         public void ReadDownloadLink()
