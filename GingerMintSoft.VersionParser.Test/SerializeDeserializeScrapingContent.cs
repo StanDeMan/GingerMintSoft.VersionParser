@@ -16,16 +16,31 @@ namespace GingerMintSoft.VersionParser.Test
         [TestMethod]
         public void SerializeDeserializeScrapingContentTest()
         {
-            var page = new HtmlPage("https://dotnet.microsoft.com");
+            var page = new HtmlPage();
             Assert.IsNotNull(page);
+
+            var baseUri = page.BaseUri;
+            Assert.IsNotNull(baseUri);
+            Console.WriteLine($"Empty ctor base uri: {baseUri}");
 
             page.BaseUri = "https://dotnet.microsoft.com";
             page.CultureInfo = CultureInfo.CreateSpecificCulture("en-us");
             var uriDotNet = page.DotNetUri;
             Assert.IsNotNull(uriDotNet);
 
+            baseUri = page.BaseUri;
+            Assert.IsNotNull(baseUri);
+            Console.WriteLine($"Base uri set via property: {baseUri}");
+
+            var netUri = page.DotNetUri;
+            Assert.IsNotNull(netUri);
+            Console.WriteLine($".NET uri: {netUri}");
+
             var downloadUri = page.DownloadUri;
             Assert.AreEqual("download/dotnet", downloadUri);
+
+            Console.WriteLine();
+            Console.WriteLine("Sdk scraping part:");
 
             var catalog = new SdkScrapingCatalog
             {
@@ -58,7 +73,7 @@ namespace GingerMintSoft.VersionParser.Test
 
             var jsonSerializerSettings = new JsonSerializerSettings();
             jsonSerializerSettings.Converters.Add(new Newtonsoft.Json.Converters.StringEnumConverter());
-            var jsonCatalog = JsonConvert.SerializeObject(catalog, jsonSerializerSettings);
+            var jsonCatalog = JsonConvert.SerializeObject(catalog, Formatting.Indented, jsonSerializerSettings);
             Assert.IsNotNull(uriDotNet);
 
             var readCatalog = JsonConvert.DeserializeObject<SdkScrapingCatalog>(jsonCatalog, jsonSerializerSettings);
@@ -74,7 +89,13 @@ namespace GingerMintSoft.VersionParser.Test
                 Console.WriteLine($"Sdk: {item.Sdk}, Version: {item.Version}");
             }
 
-            File.WriteAllText(@"D:\path.txt", jsonCatalog);
+            var path = AppDomain.CurrentDomain.BaseDirectory;
+            var directory = Path.GetDirectoryName(path);
+            Assert.IsNotNull(directory);
+
+            Console.WriteLine();
+            Console.WriteLine("Catalog:");
+            Console.WriteLine($"{jsonCatalog}");
         }
     }
 }
