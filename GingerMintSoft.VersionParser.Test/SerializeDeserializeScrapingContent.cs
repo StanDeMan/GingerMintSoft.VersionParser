@@ -46,26 +46,26 @@ namespace GingerMintSoft.VersionParser.Test
             {
                 Culture = "en-Us",
                 MicrosoftBaseUri = "https://dotnet.microsoft.com",
-                ScraperList = new List<SdkScraper>()
+                Sdks = new List<SdkScraper>()
                 {
                    new()
                    {
-                       Sdk = Sdk.Arm32,
+                       Family = Sdk.Arm32,
                        Version = Version.Core3
                    },
                    new()
                    {
-                       Sdk = Sdk.Arm64,
+                       Family = Sdk.Arm64,
                        Version = Version.Core3
                    },
                    new()
                    {
-                       Sdk = Sdk.Arm32,
+                       Family = Sdk.Arm32,
                        Version = Version.Core6
                    },
                    new()
                    {
-                       Sdk = Sdk.Arm64,
+                       Family = Sdk.Arm64,
                        Version = Version.Core6
                    }
                 }
@@ -82,11 +82,11 @@ namespace GingerMintSoft.VersionParser.Test
             Console.WriteLine($"Culture: {readCatalog.Culture}");
             Console.WriteLine($"BaseUri: {readCatalog.MicrosoftBaseUri}\r\n");
 
-            var readSdkScraperList = readCatalog.ScraperList ?? new List<SdkScraper>();
+            var sdks = readCatalog.Sdks ?? new List<SdkScraper>();
 
-            foreach (var item in readSdkScraperList)
+            foreach (var sdk in sdks)
             {
-                Console.WriteLine($"Sdk: {item.Sdk}, Version: {item.Version}");
+                Console.WriteLine($"Sdk: {sdk.Family}, Version: {sdk.Version}");
             }
 
             var path = AppDomain.CurrentDomain.BaseDirectory;
