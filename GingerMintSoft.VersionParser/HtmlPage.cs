@@ -13,9 +13,20 @@ namespace GingerMintSoft.VersionParser
 
         private HtmlDocument? Document { get; set; }
 
-        public string DotNetUri { get; set; }
+        public string BaseUri { get; set; } = "https://dotnet.microsoft.com";
+
+        public string DownloadUri { get; set; } = "download/dotnet";
+
+        public string DotNetUri { get; }
 
         public CultureInfo CultureInfo { get; set; } = CultureInfo.CreateSpecificCulture("en-us");
+
+        public HtmlPage()
+        {
+            Web = new HtmlWeb();
+
+            DotNetUri= $"{BaseUri}/{CultureInfo.Name}/{DownloadUri}";
+        }
 
         /// <summary>
         /// Constructor 
@@ -24,7 +35,8 @@ namespace GingerMintSoft.VersionParser
         {
             Web = new HtmlWeb();
 
-            DotNetUri= $"{baseUri}/{CultureInfo.Name}/download/dotnet";
+            BaseUri = baseUri;
+            DotNetUri= $"{BaseUri}/{CultureInfo.Name}/download/dotnet";
         }
 
         /// <summary>
@@ -54,7 +66,7 @@ namespace GingerMintSoft.VersionParser
 
             // Get .NET main version: 3.1/5.0/6.0/etc.
             var actual = version.GetAttributeOfType<EnumMemberAttribute>()?.Value;
-            var htmlPage = new HtmlPage("https://dotnet.microsoft.com").Load($"{DotNetUri}/{actual}");
+            var htmlPage = new HtmlPage(BaseUri).Load($"{DotNetUri}/{actual}");
 
             // Filter for Linux .NET SDK
             var downLoads = htmlPage?.DocumentNode
@@ -117,7 +129,7 @@ namespace GingerMintSoft.VersionParser
         public (string? downLoadLink, string? checkSum) ReadDownloadUriAndChecksum(string uri)
         {
             // load page content from uri
-            var htmlPage = new HtmlPage("https://dotnet.microsoft.com").Load($"{uri}");
+            var htmlPage = new HtmlPage(BaseUri).Load($"{uri}");
 
             // .NET SDK download link and checksum
             return 
