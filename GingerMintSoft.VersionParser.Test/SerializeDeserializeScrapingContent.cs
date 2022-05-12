@@ -1,9 +1,12 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Globalization;
+using System.IO;
 using GingerMintSoft.VersionParser.Architecture;
 using GingerMintSoft.VersionParser.Models;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Newtonsoft.Json;
+using Version = GingerMintSoft.VersionParser.Architecture.Version;
 
 namespace GingerMintSoft.VersionParser.Test
 {
@@ -30,22 +33,22 @@ namespace GingerMintSoft.VersionParser.Test
                 MicrosoftBaseUri = "https://dotnet.microsoft.com",
                 ScraperList = new List<SdkScraper>()
                 {
-                   new SdkScraper()
+                   new()
                    {
                        Sdk = Sdk.Arm32,
                        Version = Version.Core3
                    },
-                   new SdkScraper()
+                   new()
                    {
                        Sdk = Sdk.Arm64,
                        Version = Version.Core3
                    },
-                   new SdkScraper()
+                   new()
                    {
-                       Sdk = Sdk.Arm64,
+                       Sdk = Sdk.Arm32,
                        Version = Version.Core6
                    },
-                   new SdkScraper()
+                   new()
                    {
                        Sdk = Sdk.Arm64,
                        Version = Version.Core6
@@ -58,8 +61,20 @@ namespace GingerMintSoft.VersionParser.Test
             var jsonCatalog = JsonConvert.SerializeObject(catalog, jsonSerializerSettings);
             Assert.IsNotNull(uriDotNet);
 
-            var readCatalog = JsonConvert.DeserializeObject(jsonCatalog, jsonSerializerSettings);
+            var readCatalog = JsonConvert.DeserializeObject<SdkScrapingCatalog>(jsonCatalog, jsonSerializerSettings);
             Assert.IsNotNull(readCatalog);
+
+            Console.WriteLine($"Culture: {readCatalog.Culture}");
+            Console.WriteLine($"BaseUri: {readCatalog.MicrosoftBaseUri}\r\n");
+
+            var readSdkScraperList = readCatalog.ScraperList ?? new List<SdkScraper>();
+
+            foreach (var item in readSdkScraperList)
+            {
+                Console.WriteLine($"Sdk: {item.Sdk}, Version: {item.Version}");
+            }
+
+            File.WriteAllText(@"D:\path.txt", jsonCatalog);
         }
     }
 }
