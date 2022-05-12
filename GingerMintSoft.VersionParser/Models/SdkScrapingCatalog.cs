@@ -2,10 +2,10 @@
 {
     public class SdkScrapingCatalog
     {
-        public string? MicrosoftBaseUri { get; set; }
+        public string? MicrosoftBaseUri { get; init; }
 
-        public string? Culture { get; set; }
+        public string? Culture { get; init; }
 
-        public List<SdkScraper>? ScraperList { get; set; } = new List<SdkScraper>();
+        public List<SdkScraper>? Sdks { get; init; } = new List<SdkScraper>();
     }
 }

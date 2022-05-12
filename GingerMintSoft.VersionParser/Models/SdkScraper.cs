@@ -5,7 +5,7 @@ namespace GingerMintSoft.VersionParser.Models;
 
 public class SdkScraper
 {
-    public Version Version { get; set; }
+    public Version Version { get; init; }
 
-    public Sdk Sdk { get; set; }
+    public Sdk Family { get; init; }
 }
