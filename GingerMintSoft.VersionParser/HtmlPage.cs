@@ -62,13 +62,18 @@ namespace GingerMintSoft.VersionParser
             // filter unwanted: only ARM32 and ARM64 Bit is welcome for Raspberry Pi
             for (var i = 0; i < downLoads?.Count; i++)
             {
-                if (!downLoads[i].Contains("alpine") && !downLoads[i].Contains("x32") &&
-                    !downLoads[i].Contains("x64") && !downLoads[i].Contains("macos") &&
-                    !downLoads[i].Contains("windows") && !downLoads[i].Contains("runtime") &&
-                    !downLoads[i].Contains("rc") && !downLoads[i].Contains("preview")) 
+                if (downLoads != null && 
+                    !downLoads[i].Contains("alpine") && 
+                    !downLoads[i].Contains("x32") && 
+                    !downLoads[i].Contains("x64") && 
+                    !downLoads[i].Contains("macos") && 
+                    !downLoads[i].Contains("windows") && 
+                    !downLoads[i].Contains("runtime") && 
+                    !downLoads[i].Contains("rc") && 
+                    !downLoads[i].Contains("preview")) 
                     continue;
 
-                downLoads.RemoveAt(i--);
+                downLoads?.RemoveAt(i--);
             }
 
             // reverse version number ordering -> the actual is on top
